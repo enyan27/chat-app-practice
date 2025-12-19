@@ -29,24 +29,19 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const newUser = new User({
+        const newUser = await User.create({
             fullName,
             email,
             password: hashedPassword,
         });
 
-        if (!newUser) {
-            return res.status(400).json({ message: "Invalid user data" });
-        }
-
-        await newUser.save();
         generateToken(newUser._id, res);
 
-        try {
-            sendWelcomeEmail(newUser.email, newUser.fullName, ENV.CLIENT_URL);
-        } catch (error) {
-            console.log("Error sending welcome email:", error);
-        }
+        // try {
+        //     sendWelcomeEmail(newUser.email, newUser.fullName, ENV.CLIENT_URL);
+        // } catch (error) {
+        //     console.log("Error sending welcome email:", error);
+        // }
 
         return res.status(201).json({
             _id: newUser._id,
@@ -116,6 +111,16 @@ export const updateProfile = async (req, res) => {
         return res.status(200).json({ updatedUser });
     } catch (error) {
         console.log("Error in updateProfile:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export const getAllUser = async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+        return res.status(200).json(users);
+    } catch (error) {
+        console.log("Error in getAllUser:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 }
