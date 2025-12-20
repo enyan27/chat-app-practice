@@ -1,13 +1,14 @@
-import { Route, Routes } from "react-router"
+import { Navigate, Route, Routes } from "react-router"
+import { Toaster } from "react-hot-toast";
+
 import ChatPage from "./pages/ChatPage"
 import SignInPage from "./pages/SigninPage"
 import SignUpPage from "./pages/SignUpPage"
+
 import { useAuthStore } from "./store/useAuthStore";
 
 function App() {
-  const { isLoggedIn, setLogin } = useAuthStore();
-
-  console.log("Logged In:", isLoggedIn);
+  const { authUser } = useAuthStore();
 
   return (
     <div className="min-h-screen bg-slate-900 relative flex items-center justify-center p-4 overflow-hidden">
@@ -17,16 +18,12 @@ function App() {
       <div className="absolute bottom-0 -right-4 size-96 bg-cyan-500 opacity-20 blur-[100px]" />
 
       <Routes>
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/" element={<ChatPage />} />
+        <Route path="/" element={authUser ? <ChatPage /> : <Navigate to="/signin" />} />
+        <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
+        <Route path="/signin" element={!authUser ? <SignInPage /> : <Navigate to="/" />} />
       </Routes>
 
-      <button
-        onClick={() => setLogin()}
-        className="btn btn-primary z-10">
-        {isLoggedIn ? "Logout" : "Sign In"}
-      </button>
+      <Toaster />
     </div>
   )
 }
