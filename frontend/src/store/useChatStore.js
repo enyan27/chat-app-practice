@@ -1,0 +1,55 @@
+import { create } from "zustand";
+import { axiosInstance } from "../lib/axios";
+import toast from "react-hot-toast";
+
+export const useChatStore = create((set, get) => ({
+    allContacts: [],
+    allChats: [],
+    allMessages: [],
+    activeTab: "chats",
+    selectedUser: null,
+    isLoading: false,
+    isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
+
+    toggleSound: () => {
+        localStorage.setItem("isSoundEnabled", !get().isSoundEnabled);
+        set({ isSoundEnabled: !get().isSoundEnabled });
+    },
+
+    setActiveTab: (tab) => set({ activeTab: tab }),
+    setSelectedUser: (user) => set({ selectedUser: user }),
+
+    getAllContacts: async () => {
+        try {
+            set({ isLoading: true });
+            const res = await axiosInstance.get("/contacts");
+            set({ allContacts: res.data });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({ isLoading: false });
+        }
+    },
+    getAllChats: async () => {
+        try {
+            set({ isLoading: true });
+            const res = await axiosInstance.get("/chats");
+            set({ allChats: res.data });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({ isLoading: false });
+        }
+    },
+    getMessagesByUserId: async (userId) => {
+        try {
+            set({ isLoading: true });
+            const res = await axiosInstance.get(`/chats/${userId}`);
+            set({ allMessages: res.data });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({ isLoading: false });
+        }
+    },
+}));

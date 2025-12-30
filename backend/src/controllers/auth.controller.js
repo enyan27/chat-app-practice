@@ -5,6 +5,9 @@ import User from "../models/User.js";
 import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 import cloudinary from "../lib/cloudinary.js";
 
+export const checkAuthUser = async (req, res) => {
+    return res.status(200).json(req.user);
+}
 
 export const signUp = async (req, res) => {
     const { fullName, email, password } = req.body;

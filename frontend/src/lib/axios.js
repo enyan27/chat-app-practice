@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const axiosInstance = axios.create({
     baseURL: import.meta.env.MODE === "development" ?
@@ -6,3 +7,13 @@ export const axiosInstance = axios.create({
         "/api",
     withCredentials: true,
 });
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (!error.response) {
+            toast.error("The server is on holiday in Okinawa");
+        }
+        return Promise.reject(error);
+    }
+);

@@ -1,14 +1,24 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router"
 import { Toaster } from "react-hot-toast";
 
 import ChatPage from "./pages/ChatPage"
 import SignInPage from "./pages/SigninPage"
 import SignUpPage from "./pages/SignUpPage"
+import PageLoader from "./components/PageLoader";
 
 import { useAuthStore } from "./store/useAuthStore";
 
 function App() {
-  const { authUser } = useAuthStore();
+  const { authUser, checkAuthUser, isCheckingAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuthUser();
+  }, [checkAuthUser]);
+
+  if (isCheckingAuth) {
+    return <PageLoader />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-900 relative flex items-center justify-center p-4 overflow-hidden">
