@@ -9,20 +9,19 @@ export const useChatStore = create((set, get) => ({
     activeTab: "chats",
     selectedUser: null,
     isLoading: false,
-    isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
+    isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) || false,
 
     toggleSound: () => {
         localStorage.setItem("isSoundEnabled", !get().isSoundEnabled);
         set({ isSoundEnabled: !get().isSoundEnabled });
     },
-
     setActiveTab: (tab) => set({ activeTab: tab }),
     setSelectedUser: (user) => set({ selectedUser: user }),
 
     getAllContacts: async () => {
         try {
             set({ isLoading: true });
-            const res = await axiosInstance.get("/contacts");
+            const res = await axiosInstance.get("/messages/contacts");
             set({ allContacts: res.data });
         } catch (error) {
             toast.error(error.response.data.message);
@@ -33,7 +32,7 @@ export const useChatStore = create((set, get) => ({
     getAllChats: async () => {
         try {
             set({ isLoading: true });
-            const res = await axiosInstance.get("/chats");
+            const res = await axiosInstance.get("/messages/chats");
             set({ allChats: res.data });
         } catch (error) {
             toast.error(error.response.data.message);
@@ -44,7 +43,7 @@ export const useChatStore = create((set, get) => ({
     getMessagesByUserId: async (userId) => {
         try {
             set({ isLoading: true });
-            const res = await axiosInstance.get(`/chats/${userId}`);
+            const res = await axiosInstance.get(`/messages/chats/${userId}`);
             set({ allMessages: res.data });
         } catch (error) {
             toast.error(error.response.data.message);

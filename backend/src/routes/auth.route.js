@@ -11,7 +11,7 @@ router.get("/me", authMiddleware, checkAuthUser);
 router.post("/signup", signUp);
 router.post("/signin", signIn);
 router.post("/logout", logout);
-router.post("/update-profile", authMiddleware, updateProfile);
+router.put("/update-profile", authMiddleware, updateProfile);
 
 router.get("/all", getAllUser);
 
