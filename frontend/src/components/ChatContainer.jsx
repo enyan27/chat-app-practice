@@ -14,10 +14,17 @@ function ChatContainer() {
         isLoading,
     } = useChatStore();
     const { authUser } = useAuthStore();
+    const messageEndRef = useRef(null);
 
     useEffect(() => {
         getMessagesByUserId(selectedUser._id);
     }, [selectedUser, getMessagesByUserId]);
+
+    useEffect(() => {
+        if (messageEndRef.current) {
+            messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [allMessages]);
 
     return (
         <>
@@ -52,6 +59,8 @@ function ChatContainer() {
                                 </div>
                             </div>
                         ))}
+                        {/* Scroll to the bottom */}
+                        <div ref={messageEndRef}></div>
                     </div>
                 ) : isLoading ? (
                     <MessagesLoadingSkeleton />

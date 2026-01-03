@@ -1,17 +1,14 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
+import { app, server } from "./lib/socket.js";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 
-dotenv.config();
-
-const app = express();
 const __dirname = path.resolve();
 
 const PORT = process.env.PORT || 3000;
@@ -23,7 +20,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Make ready for deployment
+// make ready for deployment
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -32,7 +29,7 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("Server running on http://localhost:" + PORT);
     connectDB();
 });
