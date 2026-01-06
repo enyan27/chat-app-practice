@@ -40,6 +40,7 @@ export const signUp = async (req, res) => {
 
         generateToken(newUser._id, res);
 
+        /** Send welcome email */
         // try {
         //     sendWelcomeEmail(newUser.email, newUser.fullName, ENV.CLIENT_URL);
         // } catch (error) {

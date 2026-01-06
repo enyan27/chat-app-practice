@@ -12,13 +12,19 @@ function ChatContainer() {
         getMessagesByUserId,
         allMessages,
         isLoading,
+        subscribeToMessages,
+        unsubscribeFromMessages,
     } = useChatStore();
     const { authUser } = useAuthStore();
     const messageEndRef = useRef(null);
 
     useEffect(() => {
         getMessagesByUserId(selectedUser._id);
-    }, [selectedUser, getMessagesByUserId]);
+        subscribeToMessages();
+
+        // clean up
+        return () => unsubscribeFromMessages();
+    }, [selectedUser, getMessagesByUserId, subscribeToMessages, unsubscribeFromMessages]);
 
     useEffect(() => {
         if (messageEndRef.current) {
@@ -38,7 +44,7 @@ function ChatContainer() {
                                 className={`chat ${msg.senderId === authUser._id ? "chat-end" : "chat-start"}`}
                             >
                                 <div className={`chat-bubble relative ${msg.senderId === authUser._id
-                                    ? "bg-cyan-600 text-white"
+                                    ? "bg-emerald-600 text-white"
                                     : "bg-slate-800 text-slate-200"
                                     }`}
                                 >
