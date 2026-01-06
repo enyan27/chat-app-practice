@@ -7,13 +7,42 @@
 
 Here are some screenshots showcasing the application:
 
-| ![Screenshot 1](backend/src/public/Screenshot_6-1-2026_125137_localhost.jpeg) | ![Screenshot 2](backend/src/public/Screenshot_6-1-2026_125058_localhost.jpeg) |
-|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| **Sign Up Page**                                         | **Sign In Page**                              |
-
-| ![Screenshot 3](backend/src/public/Screenshot_6-1-2026_13731_localhost.jpeg) | ![Screenshot 4](backend/src/public/Screenshot_6-1-2026_1369_localhost.jpeg) |
-|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| **Home Page**                       | **Chat Window**                           |
+<table align="center" width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <img src="backend/src/public/Screenshot_6-1-2026_125137_localhost.jpeg" width="100%" />
+    </td>
+    <td align="center" width="50%">
+      <img src="backend/src/public/Screenshot_6-1-2026_125058_localhost.jpeg" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 6px;">
+      <b>Sign Up Page</b>
+    </td>
+    <td align="center" style="padding: 6px;">
+      <b>Sign In Page</b>
+    </td>
+  </tr>
+</table>
+<table align="center" width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <img src="backend/src/public/Screenshot_6-1-2026_13731_localhost.jpeg" width="100%" />
+    </td>
+    <td align="center" width="50%">
+      <img src="backend/src/public/Screenshot_6-1-2026_1369_localhost.jpeg" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 6px;">
+      <b>Home Page</b>
+    </td>
+    <td align="center" style="padding: 6px;">
+      <b>Chat Window</b>
+    </td>
+  </tr>
+</table>
 
 
 ## Features
